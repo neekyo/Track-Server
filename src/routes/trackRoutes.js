@@ -10,7 +10,11 @@ router.use(requireAuth);
 router.get('/tracks', async (req, res) => {
 	const tracks = await Track.find({ userId: req.user._id });
 
-	res.send(tracks);
+	try {
+		res.send(tracks);
+	} catch (err) {
+		res.status(422).send({ error: err.message });
+	}
 });
 
 router.post('/tracks', async (req, res) => {
