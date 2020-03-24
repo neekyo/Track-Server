@@ -3,6 +3,7 @@ const mongoose = require('mongoose');
 const requireAuth = require('../middlewares/requireAuth');
 
 const Track = mongoose.model('Track');
+
 const router = express.Router();
 
 router.use(requireAuth);
@@ -10,11 +11,7 @@ router.use(requireAuth);
 router.get('/tracks', async (req, res) => {
 	const tracks = await Track.find({ userId: req.user._id });
 
-	try {
-		res.send(tracks);
-	} catch (err) {
-		res.status(422).send({ error: err.message });
-	}
+	res.send(tracks);
 });
 
 router.post('/tracks', async (req, res) => {
